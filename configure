@@ -1,0 +1,28 @@
+#!/bin/bash
+
+umask 022
+if [ ! -f settings ] ; then
+  echo Hey there\!\! You must be in the directory where $0 and settings etc is
+  echo or this will fail miserably
+  exit 1
+fi 
+
+if ! grep -q HERE settings ; then 
+  echo \# Don\'t forget to change below thins line if you move this dir >> settings
+  HERE=`pwd`
+  echo HERE=$HERE >> settings
+fi 
+
+. settings
+
+if ! grep -q '#!/bin/bash' edit_crontab ; then 
+  (rm edit_crontab ; (echo "#!/bin/bash" ; echo ". ${HERE}/settings" ; cat -) > edit_crontab) < edit_crontab
+  chmod +x edit_crontab
+fi 
+ 
+if ! grep -q '#!/bin/bash' update-staging ; then 
+  (rm update-staging ; (echo "#!/bin/bash" ; echo ". ${HERE}/settings" ; cat -) > update-staging) < update-staging
+  chmod +x update-staging
+fi 
+ 
+

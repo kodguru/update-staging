@@ -1,0 +1,11 @@
+#!/bin/sh 
+ENV_TOP=/mnt
+NFSCMD="mount seliisahs21001:/vols0407/puppetenv ${ENV_TOP}"
+USER=znilpau
+SSHKEY=/home/znilpau/.ssh/id_rsa
+GERRIT=ssh://${USER}@gerritmirror.lmera.ericsson.se/puppet
+REPOS=(hiera-gic modules-eis modules-gic)
+ORKDIR=${ENV_TOP}/modules-staging
+CHECK_INTERVAL=13
+# Don't forget to change below thins line if you move this dir
+HERE=/home/noppe/kolgruvan/update-staging

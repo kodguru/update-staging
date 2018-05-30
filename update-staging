@@ -1,0 +1,32 @@
+#!/bin/bash
+. /home/noppe/kolgruvan/update-staging/settings
+
+umask 022
+
+cd $ORKDIR
+if [ $? -ne 0 ] ; then # )/(#/¤#()//
+  # So if we got here either dir is not mounted or does not exist
+  # See if it is nfs and can be mounted
+  test -n "$NFSCMD" && $NFSCMD
+  cd $ORKDIR
+  if [ $? -ne 0 ] ; then # Ok, might be a local dir and this is first run
+    mkdir $ORKDIR || exit 17
+    cd $ORKDIR 
+  fi
+fi
+
+REPOS=(hiera-gic modules-eis modules-gic)
+export GIT_SSH_COMMAND="ssh -i ${SSH_KEY}"
+for repo in ${REPOS[@]} ; do
+  if ! echo $@ | grep skip_$repo ; then
+    cd $repo
+    if [ $? -ne 0 ] ; then # probably first run
+      git clone  ${GERRIT}/$repo
+      cd $repo || exit 19
+    fi
+    git fetch origin
+    UPDATES=`git log HEAD..origin/staging)
+    test -n $UPDATES && git pull origin staging
+    cd ..
+  fi
+done 

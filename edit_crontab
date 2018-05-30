@@ -1,0 +1,13 @@
+#!/bin/bash
+. /home/noppe/kolgruvan/update-staging/settings
+
+umask 022
+crontab -l > /tmp/edit_crontab.$$
+if ! grep -q update-staging /tmp/edit_crontab.$$ ; then
+   echo \*/${CHECK_INTERVAL} \* \* \* \* ${HERE}/update-staging >>  /tmp/edit_crontab.$$
+   crontab - < /tmp/edit_crontab.$$
+fi
+
+
+
+ 
