@@ -25,4 +25,9 @@ if ! grep -q '#!/bin/bash' update-staging ; then
   chmod +x update-staging
 fi 
  
+if ! grep -q '#!/bin/bash' ssh-wrap ; then 
+  (rm ssh-wrap ; (echo "#!/bin/bash" ; echo ". ${HERE}/settings" ; echo "ssh -i \${SSHKEY} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no \$*" ; cat -) > ssh-wrap) < ssh-wrap
+  chmod +x ssh-wrap
+fi 
+ 
 
