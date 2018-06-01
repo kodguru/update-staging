@@ -1,0 +1,34 @@
+Utility to conveniently fetch and deploy various branches
+of git repos to a puppet environment
+
+1. install
+  run ./configure
+  edit settins
+  optionally run edit_crontab
+
+2. settings
+  Settings contains a bunch of variables. 
+  ENV_TOP:        Where you want your $ORKDIR to live
+  NFSCMD:         If set, used to mount $ENV_TOP. Come to think 
+    of it, it doesnt have to be NFS even.
+  USER:           username to use with gerrit
+  SSHKEY:         Above users gerrit key
+  GERRIT:         Example: ssh://${USER}@gerrit.ericsson.se:29418/puppet 
+    Should point to most of gerrit path to your modules. i
+    Don't put / in repo nemas, that will spawn scorpions in your keyboard
+  REPOS:          List of your repos
+  BRANCHES:       List of what branch to checkout. Must be one branch per repo
+  ORKDIR:         Name of wanted environment. 
+    Example: ${TOP_DIR}/modules_staging.
+    It should probably end up on puppetmaster(s) 
+    as /etc/puppet/environments/modules_staging or whatever you named last
+    part.
+  CHECK_INTERVAL: Interval in minutes (1..59) you want cronjob to run the update
+  KICKPUPPET:     Command to run to refresh puppetservers
+    Example: ${ENV_TOP}/modules-gic/update-puppet-modules.sh
+  HERE:           Added by configure and should point to dir where this file is 
+    If you don't have it in settings, you haven't run configure. 
+    If it points to wrong path, file a ticket. 
+    If you move this dir from where originally configured, you will
+    get scorpions in your keyboard.
+
