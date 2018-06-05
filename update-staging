@@ -1,4 +1,9 @@
 
+# Parameters
+# skip_<repo> : Will skip updating that repo
+# skip_update : Do not restart puppetmasters. Or rather, don't run
+# KICKPUPPET command
+
 umask 022
 
 cd $ORKDIR
@@ -29,7 +34,7 @@ while [ $i -lt ${#REPOS[@]} ] ; do
   repo=${REPOS[$i]}
   branch=${BRANCHES[$i]}
   i=`expr $i + 1`
-  if ! echo $@ | grep skip_$repo ; then
+  if ! echo $@ | grep -q skip_$repo ; then
     cd $repo
     if [ $? -ne 0 ] ; then # probably first run
       echo $GERRIT
@@ -41,12 +46,14 @@ while [ $i -lt ${#REPOS[@]} ] ; do
     git fetch origin
     UPDATES=`git log HEAD..origin/${branch}`
     if [ -n "$UPDATES" ] ; then
-      git pull origin ${branch}
+      git checkout ${branch}
       refresh_puppet=1
     fi
     cd ..
   fi
 done 
 if [ $refresh_puppet -ne 0 ] ; then
-  test -n "${KICKPUPPET}" && ${KICKPUPPET}
+  if ! echo $@ | grep -q skip_update ; then 
+    test -n "${KICKPUPPET}" && ${KICKPUPPET}
+  fi
 fi
