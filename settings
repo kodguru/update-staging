@@ -1,0 +1,12 @@
+#!/bin/sh 
+ENV_TOP=/home/znilpau/mnt
+# NFSCMD="mount seliisahs21001:/vols0407/puppetenv ${ENV_TOP}"
+USER=znilpau
+SSHKEY=/home/znilpau/.ssh/id_rsa
+GERRIT=ssh://${USER}@gerrit.ericsson.se:29418/puppet
+export GERRIT
+REPOS=(hiera-gic modules-eis modules-gic)
+BRANCHES=(master staging staging)
+ORKDIR=${ENV_TOP}/modules-staging
+CHECK_INTERVAL=13
+# KICKPUPPET=${ENV_TOP}/modules-gic/update-puppet-modules.sh

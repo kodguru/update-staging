@@ -1,0 +1,59 @@
+
+# Parameters
+# skip_<repo> : Will skip updating that repo
+# skip_update : Do not restart puppetmasters. Or rather, don't run
+# KICKPUPPET command
+
+umask 022
+
+cd $ORKDIR
+if [ $? -ne 0 ] ; then # )/(#/¤#()//
+  # So if we got here either dir is not mounted or does not exist
+  # See if it is nfs and can be mounted
+  if [ -n "$NFSCMD" ] ; then
+   $NFSCMD
+  else 
+    mkdir -p $ORKDIR || exit 16
+  fi
+  cd $ORKDIR
+  if [ $? -ne 0 ] ; then # Ok, might be a local dir and this is first run
+    exit 17
+  fi
+fi
+
+GIT_VERS=`git --version | awk '{print $NF}' | awk -F. '{print $1$2$3}'`
+if [ $GIT_VERS -ge 230 ] ; then 
+  export GIT_SSH_COMMAND="ssh -i ${SSHKEY}"
+else
+  export GIT_SSH="${HERE}/ssh-wrap"
+fi
+echo "PWD:" ; pwd
+i=0
+refresh_puppet=0
+while [ $i -lt ${#REPOS[@]} ] ; do
+  repo=${REPOS[$i]}
+  branch=${BRANCHES[$i]}
+  i=`expr $i + 1`
+  if ! echo $@ | grep -q skip_$repo ; then
+    cd $repo
+    if [ $? -ne 0 ] ; then # probably first run
+      echo $GERRIT
+      echo "export GIT_SSH="$GIT_SSH
+      echo git clone  ${GERRIT}/$repo
+      git clone  ${GERRIT}/$repo
+      cd $repo || exit 19
+    fi
+    git fetch origin
+    UPDATES=`git log HEAD..origin/${branch}`
+    if [ -n "$UPDATES" ] ; then
+      git checkout ${branch}
+      refresh_puppet=1
+    fi
+    cd ..
+  fi
+done 
+if [ $refresh_puppet -ne 0 ] ; then
+  if ! echo $@ | grep -q skip_update ; then 
+    test -n "${KICKPUPPET}" && ${KICKPUPPET}
+  fi
+fi
