@@ -9,4 +9,5 @@ REPOS=(hiera-gic modules-eis modules-gic)
 BRANCHES=(master staging staging)
 ORKDIR=${ENV_TOP}/modules-staging
 CHECK_INTERVAL=13
-# KICKPUPPET=${ENV_TOP}/modules-gic/update-puppet-modules.sh
+KICKDIR=${ENV_TOP}/modules-staging/modules-gic
+#KICKPUPPET=${KICKDIR}/update_puppet_modules.sh

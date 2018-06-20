@@ -54,6 +54,6 @@ while [ $i -lt ${#REPOS[@]} ] ; do
 done 
 if [ $refresh_puppet -ne 0 ] ; then
   if ! echo $@ | grep -q skip_update ; then 
-    test -n "${KICKPUPPET}" && ${KICKPUPPET}
+    test -n "${KICKPUPPET}" && [[ -d $KICKDIR ]] && cd $KICKDIR && ${KICKPUPPET}
   fi
 fi
