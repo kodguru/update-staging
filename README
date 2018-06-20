@@ -3,8 +3,8 @@ of git repos to a puppet environment
 
 1. installation
   clone this repo somewhere
-  run ./configure
   edit settins
+  run ./configure
   optionally run edit_crontab
 
 2. settings
