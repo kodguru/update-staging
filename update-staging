@@ -1,3 +1,4 @@
+#!/bin/bash
 
 # Parameters
 # skip_<repo> : Will skip updating that repo
@@ -57,3 +58,25 @@ if [ $refresh_puppet -ne 0 ] ; then
     test -n "${KICKPUPPET}" && [[ -d $KICKDIR ]] && cd $KICKDIR && ${KICKPUPPET}
   fi
 fi
+
+ln -s $ORKDIR/hiera-gic $ORKDIR/hiera
+mkdir -p $ORKDIR/manifests
+cat << EOF > "$ORKDIR/environment.conf"
+config_version = '/bin/hostname -f'
+modulepath = ./modules:$confdir/modules-gic:$confdir/modules-eis
+EOF
+
+git clone ssh://gerrit.ericsson.se:29418/puppet/manifests-eis.git "$ORKDIR/manifests"
+
+mkdir "$ORKDIR/manifests" 
+cat << EOF > "$ORKDIR/manifests/site.pp"
+if $::osfamily == 'Suse' and $::lsbmajdistrelease == '12' {
+  Service {
+    provider => 'systemd'
+  }
+}
+
+node default {
+  hiera_include('classes')
+}
+EOF
