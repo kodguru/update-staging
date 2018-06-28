@@ -67,7 +67,7 @@ modulepath = ./modules:$confdir/modules-gic:$confdir/modules-eis
 EOF
 
 [[ -d "$ORKDIR/manifests" ]] || \
-git clone ssh://gerrit.ericsson.se:29418/puppet/manifests-eis.git "$ORKDIR/manifests"
+git clone ssh://${USER}@gerrit.ericsson.se:29418/puppet/manifests-eis.git "$ORKDIR/manifests"
 
 [[ -f "$ORKDIR/manifests/site.pp" ]] || \
 cat << EOF > "$ORKDIR/manifests/site.pp"
