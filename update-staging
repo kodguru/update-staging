@@ -1,5 +1,3 @@
-#!/bin/bash
-
 # Parameters
 # skip_<repo> : Will skip updating that repo
 # skip_update : Do not restart puppetmasters. Or rather, don't run
