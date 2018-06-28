@@ -7,7 +7,7 @@ GERRIT=ssh://${USER}@gerrit.ericsson.se:29418/puppet
 export GERRIT
 REPOS=(hiera-gic modules-eis modules-gic)
 BRANCHES=(master staging staging)
-ORKDIR=${ENV_TOP}/modules-staging
+ORKDIR=${ENV_TOP}/modules_staging
 CHECK_INTERVAL=13
-KICKDIR=${ENV_TOP}/modules-staging/modules-gic
+KICKDIR=${ENV_TOP}/modules_staging/modules-gic
 #KICKPUPPET=${KICKDIR}/update_puppet_modules.sh
