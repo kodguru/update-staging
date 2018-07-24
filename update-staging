@@ -54,7 +54,8 @@ while [ $i -lt ${#REPOS[@]} ] ; do
 done 
 if [ $refresh_puppet -ne 0 ] ; then
   if ! echo $@ | grep -q skip_update ; then 
-    test -n "${KICKPUPPET}" && [[ -d $KICKDIR ]] && cd $KICKDIR && ${KICKPUPPET}
+    test -n "${KICKPUPPET}" && [[ -d $KICKDIR ]] && cd $KICKDIR &&  sed -i "s#gerritmirror:29418#gerritmirror.${TMPDOMAIN}:29418#g" Puppetfile && \
+${KICKPUPPET}
   fi
 fi
 
