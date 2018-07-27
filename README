@@ -25,7 +25,7 @@ of git repos to a puppet environment
     as /etc/puppet/environments/modules_staging or whatever you named last
     part. Yes, I misspelled workdir, but was too lazy to correct it.
   CHECK_INTERVAL: Interval in minutes (1..59) you want cronjob to run the update
-  TMPDOMAIN: gerritmirror hasn't yet made it into the GICs yet. Use this to point at your gerritmiror utside the hub. Ugly - to be removed
+  TMPDOMAIN: NB: Must begin with a '.' (dot). Rationale:gerritmirror hasn't yet (2018-07-27) made it into the GICs yet. Use this to point at your gerritmiror utside the hub. Ugly - to be removed
   KICKPUPPET:     Command to run to refresh puppetservers
     Example: ${ENV_TOP}/modules-gic/update-puppet-modules.sh
   HERE:           Added by configure and should point to dir where this file is 

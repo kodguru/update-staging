@@ -10,7 +10,7 @@ BRANCHES=(master staging staging)
 ORKDIR=${ENV_TOP}/modules_staging
 CHECK_INTERVAL=13
 KICKDIR=${ENV_TOP}/modules_staging/modules-gic
-TMPDOMAIN=rnd.ki.sw.ericsson.se
+#TMPDOMAIN=.rnd.ki.sw.ericsson.se
 KICKPUPPET=${KICKDIR}/update_puppet_modules.sh
 # Don't forget to change below thins line if you move this dir
 HERE=/etc/puppet/environments/modules_staging/bin
