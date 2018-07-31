@@ -8,7 +8,7 @@ if [ ! -f settings ] ; then
 fi 
 
 if ! grep -q HERE settings ; then 
-  echo \# Don\'t forget to change below thins line if you move this dir >> settings
+  echo \# Don\'t forget to change below this line if you move this dir >> settings
   HERE=`pwd`
   echo HERE=$HERE >> settings
 fi 
